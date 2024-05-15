@@ -1,5 +1,6 @@
 package account.mapper;
 
+import account.business.AdminService;
 import account.domain.dto.GetPayrollResponseDto;
 import account.domain.dto.UploadPayrollDto;
 import account.business.exception.EmployeeNotFoundException;
@@ -12,16 +13,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PayrollMapper {
-    private final UserRepository userRepository;
+    private final AdminService adminService;
 
     @Autowired
-    public PayrollMapper (UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public PayrollMapper (AdminService adminService) {
+        this.adminService = adminService;
     }
 
     public Payroll toEntity (UploadPayrollDto dto) throws UsernameNotFoundException {
-        User user = userRepository.findByUsernameIgnoreCase(dto.employee())
-                .orElseThrow(EmployeeNotFoundException::new);
+        User user = adminService.getUserByUsername(dto.employee());
+        if (user == null) {
+            throw new EmployeeNotFoundException();
+        }
         return new Payroll()
                 .setPeriod(dto.period())
                 .setSalary(dto.salary())

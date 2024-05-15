@@ -12,7 +12,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "\"EVENT\"")
+@Table(name = "events")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
