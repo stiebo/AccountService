@@ -24,7 +24,7 @@ public class Payroll {
     @Column(nullable = false)
     private Long salary;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(nullable = false)
     private User user;
 }
