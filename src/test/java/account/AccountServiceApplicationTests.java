@@ -14,7 +14,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
@@ -69,16 +68,30 @@ class AccountServiceApplicationTests {
         UserResponseDto responseDto = new UserResponseDto(2L, "Peter", "Pan",
                 "user1@acme.com", List.of("ROLE_USER"));
         String expectedJson = objectMapper.writeValueAsString(responseDto);
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/auth/signup")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(adminDtoJson)
-        ).andExpect(
-                status().isOk()
-        ).andExpect(
-                content().json(expectedJson)
-        );
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(adminDtoJson)
+        ).andExpect(status().isOk()
+        ).andExpect(content().json(expectedJson));
     }
+
+    @Test
+    @DisplayName("Create 3rd user and expect response with ROLE_USER, status code 200 (Ok)")
+    public void testThatCreate3rdUserSuccessfullyReturnsHttp200OkAndCorrectJsonWithROLE_USER() throws Exception {
+        AddUserDto adminDto = new AddUserDto("Peter", "Pan", "accountant@acme.com",
+                "thesupersecretpassword");
+        String adminDtoJson = objectMapper.writeValueAsString(adminDto);
+
+        UserResponseDto responseDto = new UserResponseDto(3L, "Peter", "Pan",
+                "accountant@acme.com", List.of("ROLE_USER"));
+        String expectedJson = objectMapper.writeValueAsString(responseDto);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(adminDtoJson)
+        ).andExpect(status().isOk()
+        ).andExpect(content().json(expectedJson));
+    }
+
 
 
 }

@@ -9,6 +9,7 @@ import account.domain.dto.UserResponseDto;
 import account.mapper.UserMapper;
 import account.domain.entities.User;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/auth")
+@Slf4j
 public class AuthController {
     private final AuthService service;
     private final UserMapper userMapper;
@@ -36,6 +38,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto>registerUser (@Valid @RequestBody AddUserDto addUserDto) {
+        log.info("{} / Post /signup {}",this.getClass(), addUserDto.getEmail());
         User user = service.registerUser(userMapper.addUserDtoToEntity(addUserDto));
         logger.logEvent(EventName.CREATE_USER, "Anonymous", user.getUsername(), "/api/auth/signup");
         return ResponseEntity.ok(userMapper.toUserResponseDto(user));
@@ -44,6 +47,7 @@ public class AuthController {
     @PostMapping("/changepass")
     public ResponseEntity<Map<String,String>> changePassword (@Valid @RequestBody ChangePwdDto changePwdDto,
                                                               @AuthenticationPrincipal User user) {
+        log.info("{} / Post /changepass {}", this.getClass(), user.getUsername());
         service.changePassword(user, changePwdDto.new_password());
         logger.logEvent(EventName.CHANGE_PASSWORD, user.getUsername(), user.getUsername(), "/api/auth/signup");
         return ResponseEntity.ok(Map.of("email", user.getEmail(),

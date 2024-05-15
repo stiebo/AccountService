@@ -11,7 +11,7 @@ import java.time.YearMonth;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "\"PAYROLL\"")
+@Table(name = "payrolls")
 public class Payroll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
