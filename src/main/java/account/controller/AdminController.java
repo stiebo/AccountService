@@ -82,6 +82,7 @@ public class AdminController {
         }
     }
 
+    // Better to return a 204 here
     @DeleteMapping("/user/{user_email}")
     public ResponseEntity<?> deleteUser(@PathVariable("user_email") String userEmail,
                                         @AuthenticationPrincipal User requester) {

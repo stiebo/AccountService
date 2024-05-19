@@ -13,6 +13,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
+// it is ok to have the table called event.
 @Table(name = "events")
 public class Event {
     @Id
