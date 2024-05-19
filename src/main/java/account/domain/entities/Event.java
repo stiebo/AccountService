@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import java.time.Instant;
 
+// better to not use data on entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

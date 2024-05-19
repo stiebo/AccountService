@@ -26,9 +26,12 @@ public class AcctController {
         this.mapper = payrollMapper;
     }
 
+    // should return statuscode 201
     @PostMapping("/payments")
+    // don't need to return response entity it is a rest controller
     public ResponseEntity<Map<String, String>> uploadPayrolls(@Valid @RequestBody
                                                                   List<UploadPayrollDto> uploadPayrollDtoList) {
+        // try to have all the mapping in the mapper
         List<Payroll> payrollList = new ArrayList<>();
         uploadPayrollDtoList.forEach(uploadPayrollDto -> payrollList.add(mapper.toEntity(uploadPayrollDto)));
         service.savePayrolls(payrollList);

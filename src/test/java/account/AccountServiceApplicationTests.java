@@ -19,8 +19,12 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+// also add some unit tests
+
 @SpringBootTest
+// why @ExtendWith(SpringExtension.class)
 @ExtendWith(SpringExtension.class)
+// why do you need dirtiesContext?
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @AutoConfigureMockMvc
 class AccountServiceApplicationTests {
@@ -58,6 +62,9 @@ class AccountServiceApplicationTests {
                 );
     }
 
+
+    // shouldCreateUser, I feel would be better
+    // you can leave display name it is extra text to maintain and name should be good enough
     @Test
     @DisplayName("Create 2nd user and expect response with ROLE_USER, status code 200 (Ok)")
     public void testThatCreateAnotherUserSuccessfullyReturnsHttp200OkAndCorrectJsonWithROLE_USER() throws Exception {
@@ -75,6 +82,8 @@ class AccountServiceApplicationTests {
         ).andExpect(content().json(expectedJson));
     }
 
+
+    // what is the purpose of this test
     @Test
     @DisplayName("Create 3rd user and expect response with ROLE_USER, status code 200 (Ok)")
     public void testThatCreate3rdUserSuccessfullyReturnsHttp200OkAndCorrectJsonWithROLE_USER() throws Exception {

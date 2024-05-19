@@ -34,6 +34,7 @@ public class EmployeeController {
     public ResponseEntity<?> getPayroll(
             @Valid @RequestParam Optional<YearMonth> period,
             @AuthenticationPrincipal User user) {
+// I would have a list with 1 element or a list. You can add a query inside the repo. so you only have one method.
         if (period.isPresent()) {
             return ResponseEntity.ok(mapper.toGetPayrollDto(service.getPayroll(user, period.get())));
         } else {

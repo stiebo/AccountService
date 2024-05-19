@@ -31,6 +31,7 @@ public class AdminController {
         this.logger = securityService;
     }
 
+
     @PutMapping("/user/role")
     public ResponseEntity<UserResponseDto> changeUserRole(@Valid @RequestBody ChangeUserRoleDto changeUserRoleDto,
                                                           @AuthenticationPrincipal User requester) {
