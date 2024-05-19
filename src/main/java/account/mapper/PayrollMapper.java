@@ -21,6 +21,7 @@ public class PayrollMapper {
     }
 
     public Payroll toEntity (UploadPayrollDto dto) throws UsernameNotFoundException {
+        // better to use optionals here
         User user = adminService.getUserByUsername(dto.employee());
         if (user == null) {
             throw new EmployeeNotFoundException();
