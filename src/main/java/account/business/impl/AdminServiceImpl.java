@@ -74,6 +74,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    // why transactional?
     @Transactional
     public void lockUser(ChangeUserLockDto changeUserLockDto, User requester) throws AdminServiceException {
         User user = findUserOrThrow(changeUserLockDto.user());
