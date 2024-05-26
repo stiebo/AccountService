@@ -151,13 +151,10 @@ public class AdminServiceImpl implements AdminService {
 
     private void checkAndThrowIfInvalidRole(String role) throws RoleNotFoundException {
         List<Group> groups = groupRepository.findAll();
-        // better to use stream
-        for (Group group : groups) {
-            if (group.getName().equals(role)) {
-                return;
-            }
-        }
-        throw new RoleNotFoundException();
+        groups.stream()
+                .filter(group -> group.getName().equals(role))
+                .findAny()
+                .orElseThrow(RoleNotFoundException::new);
     }
 
     private Group findGroupOrThrowIfNotAUserRole(String role, User user) throws AdminServiceException {
