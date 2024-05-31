@@ -159,12 +159,10 @@ public class AdminServiceImpl implements AdminService {
 
     private Group findGroupOrThrowIfNotAUserRole(String role, User user) throws AdminServiceException {
         List<Group> groups = user.getGroups();
-        for (Group group : groups) {
-            if (group.getName().equals(role)) {
-                return group;
-            }
-        }
-        throw new AdminServiceException("The user does not have a role!");
+        return groups.stream()
+                .filter(group -> group.getName().equals(role))
+                .findAny()
+                .orElseThrow(() -> new AdminServiceException("The user does not have this role!"));
     }
 
     private void checkAndThrowIfRoleCategoryViolation(String role, User user) throws AdminServiceException {
