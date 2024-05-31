@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class AuthenticationFailureListener implements
         ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
@@ -33,8 +35,9 @@ public class AuthenticationFailureListener implements
                 username,
                 request.getRequestURI(),
                 request.getRequestURI());
-        User user = service.getUserByUsername(username);
-        if (user != null) {
+        Optional<User> optionalUser = service.getUserByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
             if (!service.hasAdminRole(user) && user.isEnabled() && user.isAccountNonLocked()) {
                 if (user.getFailedAttempts() < service.MAX_FAILED_ATTEMPTS - 1) {
                     service.increaseFailedAttempts(user);

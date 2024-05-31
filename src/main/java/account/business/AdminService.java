@@ -4,11 +4,12 @@ import account.domain.dto.ChangeUserLockDto;
 import account.domain.entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdminService {
     int MAX_FAILED_ATTEMPTS = 5;
     List<User> getAllUsers();
-    User getUserByUsername(String username);
+    Optional<User> getUserByUsername(String username);
     void deleteUser(String username, User requester);
     User grantRole(String role, String username, User requester);
     User removeRole(String role, String username, User requester);
