@@ -36,7 +36,6 @@ public class AdminController {
     public ResponseEntity<UserResponseDto> changeUserRole(@Valid @RequestBody ChangeUserRoleDto changeUserRoleDto,
                                                           @AuthenticationPrincipal User requester) {
 
-        // do you need the switch?
         switch (changeUserRoleDto.operation()) {
             case "GRANT":
                 User user = service.grantRole("ROLE_" + changeUserRoleDto.role(),
@@ -84,7 +83,6 @@ public class AdminController {
         }
     }
 
-    // Better to return a 204 here
     @DeleteMapping("/user/{user_email}")
     public ResponseEntity<?> deleteUser(@PathVariable("user_email") String userEmail,
                                         @AuthenticationPrincipal User requester) {
