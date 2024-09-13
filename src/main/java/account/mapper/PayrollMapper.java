@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class PayrollMapper {
     private final AdminService adminService;
@@ -21,14 +23,14 @@ public class PayrollMapper {
     }
 
     public Payroll toEntity (UploadPayrollDto dto) throws UsernameNotFoundException {
-        User user = adminService.getUserByUsername(dto.employee());
-        if (user == null) {
+        Optional<User> optionalUser = adminService.getUserByUsername(dto.employee());
+        if (optionalUser.isEmpty()) {
             throw new EmployeeNotFoundException();
         }
         return new Payroll()
                 .setPeriod(dto.period())
                 .setSalary(dto.salary())
-                .setUser(user);
+                .setUser(optionalUser.get());
     }
 
     public GetPayrollResponseDto toGetPayrollDto (Payroll payroll) {

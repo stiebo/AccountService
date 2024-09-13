@@ -7,7 +7,8 @@ import lombok.experimental.Accessors;
 
 import java.time.Instant;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)

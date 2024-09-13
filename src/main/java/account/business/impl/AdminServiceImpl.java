@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -27,9 +28,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsernameIgnoreCase(username)
-                .orElse(null);
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsernameIgnoreCase(username);
     }
 
     @Override
@@ -116,11 +116,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public void resetFailedAttempts(String username) {
-        User user = getUserByUsername(username);
-        if (user != null) {
-            if (user.getFailedAttempts() != 0) {
-                user.setFailedAttempts(0);
-                userRepository.save(user);
+        Optional<User> optionalUser = getUserByUsername(username);
+        if (optionalUser.isPresent()) {
+            if (optionalUser.get().getFailedAttempts() != 0) {
+                optionalUser.get().setFailedAttempts(0);
+                userRepository.save(optionalUser.get());
             }
         }
     }
@@ -149,22 +149,18 @@ public class AdminServiceImpl implements AdminService {
 
     private void checkAndThrowIfInvalidRole(String role) throws RoleNotFoundException {
         List<Group> groups = groupRepository.findAll();
-        for (Group group : groups) {
-            if (group.getName().equals(role)) {
-                return;
-            }
-        }
-        throw new RoleNotFoundException();
+        groups.stream()
+                .filter(group -> group.getName().equals(role))
+                .findAny()
+                .orElseThrow(RoleNotFoundException::new);
     }
 
     private Group findGroupOrThrowIfNotAUserRole(String role, User user) throws AdminServiceException {
         List<Group> groups = user.getGroups();
-        for (Group group : groups) {
-            if (group.getName().equals(role)) {
-                return group;
-            }
-        }
-        throw new AdminServiceException("The user does not have a role!");
+        return groups.stream()
+                .filter(group -> group.getName().equals(role))
+                .findAny()
+                .orElseThrow(() -> new AdminServiceException("The user does not have this role!"));
     }
 
     private void checkAndThrowIfRoleCategoryViolation(String role, User user) throws AdminServiceException {
