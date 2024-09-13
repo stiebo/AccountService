@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "f25d8946-0dc1-4756-8b87-3f73f3b04824",
+		"name": "All",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34622042"
+	},
+	"item": [
+		{
+			"name": "Admin register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\": \"John\",\r\n   \"lastname\": \"Doe Admin\",\r\n   \"email\": \"admin@acme.com\",\r\n   \"password\": \"PasswordForJanuaryandmore\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\": \"John\",\r\n   \"lastname\": \"User\",\r\n   \"email\": \"user1@acme.com\",\r\n   \"password\": \"PasswordForJanuaryandmore\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin grant role",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"user\": \"user1@acme.com\",\r\n   \"role\": \"ACCOUNTANT\",\r\n   \"operation\": \"GRANT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/admin/user/role",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"admin",
+						"user",
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin get users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin@acme.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/admin/user/",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"admin",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accountant post payroll",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user1@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"employee\": \"user1@acme.com\",\r\n        \"period\": \"07-2021\",\r\n        \"salary\": 123456\r\n    },\r\n    {\r\n        \"employee\": \"user1@acme.com\",\r\n        \"period\": \"08-2021\",\r\n        \"salary\": 123456\r\n    },\r\n    {\r\n        \"employee\": \"user1@acme.com\",\r\n        \"period\": \"09-2021\",\r\n        \"salary\": 123456\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/acct/payments",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"acct",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accountant correct salary",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user1@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employee\": \"user1@acme.com\",\r\n    \"period\": \"07-2021\",\r\n    \"salary\": 123457\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/acct/payments",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"acct",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User read payroll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user1@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/empl/payment?period=09-2021",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"empl",
+						"payment"
+					],
+					"query": [
+						{
+							"key": "period",
+							"value": "09-2021"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User changepass",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user1@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"new_password\": \"PasswordForJanuaryandevenmore\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/auth/changepass",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"auth",
+						"changepass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auditor get security events",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "auditor@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:28852/api/security/events/",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"security",
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin lock&unlock",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"user\": \"user1@acme.com\",\r\n   \"operation\": \"UNLOCK\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/admin/user/access",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"admin",
+						"user",
+						"access"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin delete user",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin@acme.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "PasswordForJanuaryandmore",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:28852/api/admin/user/admin@acme.com",
+					"host": [
+						"localhost"
+					],
+					"port": "28852",
+					"path": [
+						"api",
+						"admin",
+						"user",
+						"admin@acme.com"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
