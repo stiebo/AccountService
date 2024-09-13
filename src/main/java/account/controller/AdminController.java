@@ -34,9 +34,10 @@ public class AdminController {
     @PutMapping("/user/role")
     public ResponseEntity<UserResponseDto> changeUserRole(@Valid @RequestBody ChangeUserRoleDto changeUserRoleDto,
                                                           @AuthenticationPrincipal User requester) {
+        User user;
         switch (changeUserRoleDto.operation()) {
             case "GRANT":
-                User user = service.grantRole("ROLE_" + changeUserRoleDto.role(),
+                user = service.grantRole("ROLE_" + changeUserRoleDto.role(),
                         changeUserRoleDto.user(), requester);
                 logger.logEvent(EventName.GRANT_ROLE,
                         requester.getUsername(),
