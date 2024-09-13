@@ -31,11 +31,9 @@ public class AdminController {
         this.logger = securityService;
     }
 
-
     @PutMapping("/user/role")
     public ResponseEntity<UserResponseDto> changeUserRole(@Valid @RequestBody ChangeUserRoleDto changeUserRoleDto,
                                                           @AuthenticationPrincipal User requester) {
-
         switch (changeUserRoleDto.operation()) {
             case "GRANT":
                 User user = service.grantRole("ROLE_" + changeUserRoleDto.role(),
