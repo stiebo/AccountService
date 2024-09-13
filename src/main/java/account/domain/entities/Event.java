@@ -7,13 +7,12 @@ import lombok.experimental.Accessors;
 
 import java.time.Instant;
 
-// better to not use data on entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
-// it is ok to have the table called event.
 @Table(name = "events")
 public class Event {
     @Id

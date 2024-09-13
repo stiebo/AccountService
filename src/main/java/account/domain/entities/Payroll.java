@@ -6,7 +6,8 @@ import lombok.experimental.Accessors;
 
 import java.time.YearMonth;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
