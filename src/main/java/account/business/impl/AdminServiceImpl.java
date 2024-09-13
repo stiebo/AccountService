@@ -47,7 +47,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    // this one is very similar with the one below.
     @Transactional
     public User grantRole(String role, String username, User requester) {
         User user = findUserOrThrow(username);
@@ -75,7 +74,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    // why transactional?
     @Transactional
     public void lockUser(ChangeUserLockDto changeUserLockDto, User requester) throws AdminServiceException {
         User user = findUserOrThrow(changeUserLockDto.user());
