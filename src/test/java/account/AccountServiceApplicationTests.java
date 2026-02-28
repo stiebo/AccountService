@@ -4,10 +4,14 @@ import account.domain.dto.AddUserDto;
 import account.domain.dto.UserResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -17,6 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountServiceApplicationTests {
 
     private MockMvc mockMvc;
@@ -29,10 +35,12 @@ class AccountServiceApplicationTests {
     }
 
     @Test
+    @Order(0)
     void contextLoads() {
     }
 
     @Test
+    @Order(1)
     public void testThatCreateAdminUserSuccessfullyReturnsHttp200OkAndCorrectJsonWithROLE_ADMINISTRATOR() throws Exception {
         AddUserDto adminDto = new AddUserDto("Peter", "Pan", "admin@acme.com",
                 "thesupersecretpassword");
@@ -53,6 +61,7 @@ class AccountServiceApplicationTests {
 
 
     @Test
+    @Order(2)
     public void testThatCreateAnotherUserSuccessfullyReturnsHttp200OkAndCorrectJsonWithROLE_USER() throws Exception {
         AddUserDto adminDto = new AddUserDto("Peter", "Pan", "user1@acme.com",
                 "thesupersecretpassword");
@@ -70,6 +79,7 @@ class AccountServiceApplicationTests {
 
 
     @Test
+    @Order(3)
     public void testCreateAccountantUserSuccessfullyReturnsHttp200OkAndCorrectJsonWithROLE_USER() throws Exception {
         AddUserDto adminDto = new AddUserDto("Peter", "Pan", "accountant@acme.com",
                 "thesupersecretpassword");
